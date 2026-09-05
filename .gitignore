@@ -1,0 +1,88 @@
+sentence_transformers/annotated_doc-0.0.4-py3-none-any.whl
+sentence_transformers/anyio-4.13.0-py3-none-any.whl
+sentence_transformers/certifi-2026.5.20-py3-none-any.whl
+sentence_transformers/click-8.4.1-py3-none-any.whl
+sentence_transformers/colorama-0.4.6-py2.py3-none-any.whl
+sentence_transformers/Config Files/1_Pooling/config.json
+sentence_transformers/Config Files/config.json
+sentence_transformers/Config Files/config_sentence_transformers.json
+sentence_transformers/Config Files/data_config.json
+sentence_transformers/Config Files/gitattributes
+sentence_transformers/Config Files/model.safetensors
+sentence_transformers/Config Files/modules.json
+sentence_transformers/Config Files/onnx/model.onnx
+sentence_transformers/Config Files/onnx/model_O1.onnx
+sentence_transformers/Config Files/onnx/model_O2.onnx
+sentence_transformers/Config Files/onnx/model_O3.onnx
+sentence_transformers/Config Files/onnx/model_O4.onnx
+sentence_transformers/Config Files/onnx/model_qint8_arm64.onnx
+sentence_transformers/Config Files/onnx/model_qint8_avx512.onnx
+sentence_transformers/Config Files/onnx/model_qint8_avx512_vnni.onnx
+sentence_transformers/Config Files/onnx/model_quint8_avx2.onnx
+sentence_transformers/Config Files/openvino/openvino_model.bin
+sentence_transformers/Config Files/openvino/openvino_model.xml
+sentence_transformers/Config Files/openvino/openvino_model_qint8_quantized.bin
+sentence_transformers/Config Files/openvino/openvino_model_qint8_quantized.xml
+sentence_transformers/Config Files/pytorch_model.bin
+sentence_transformers/Config Files/README.md
+sentence_transformers/Config Files/rust_model.ot
+sentence_transformers/Config Files/sentence_bert_config.json
+sentence_transformers/Config Files/special_tokens_map.json
+sentence_transformers/Config Files/tf_model.h5
+sentence_transformers/Config Files/tokenizer.json
+sentence_transformers/Config Files/tokenizer_config.json
+sentence_transformers/Config Files/train_script.py
+sentence_transformers/Config Files/vocab.txt
+sentence_transformers/filelock-3.29.2-py3-none-any.whl
+sentence_transformers/fsspec-2026.4.0-py3-none-any.whl
+sentence_transformers/h11-0.16.0-py3-none-any.whl
+sentence_transformers/hf_xet-1.5.1-cp37-abi3-win_amd64.whl
+sentence_transformers/httpcore-1.0.9-py3-none-any.whl
+sentence_transformers/httpx-0.28.1-py3-none-any.whl
+sentence_transformers/huggingface_hub-1.18.0-py3-none-any.whl
+sentence_transformers/idna-3.18-py3-none-any.whl
+sentence_transformers/jinja2-3.1.6-py3-none-any.whl
+sentence_transformers/joblib-1.5.3-py3-none-any.whl
+sentence_transformers/markdown_it_py-4.2.0-py3-none-any.whl
+sentence_transformers/markupsafe-3.0.3-cp313-cp313-win_amd64.whl
+sentence_transformers/mdurl-0.1.2-py3-none-any.whl
+sentence_transformers/mpmath-1.3.0-py3-none-any.whl
+sentence_transformers/narwhals-2.22.1-py3-none-any.whl
+sentence_transformers/networkx-3.6.1-py3-none-any.whl
+sentence_transformers/numpy-2.4.6-cp313-cp313-win_amd64.whl
+sentence_transformers/packaging-26.2-py3-none-any.whl
+sentence_transformers/pygments-2.20.0-py3-none-any.whl
+sentence_transformers/pyyaml-6.0.3-cp313-cp313-win_amd64.whl
+sentence_transformers/regex-2026.5.9-cp313-cp313-win_amd64.whl
+sentence_transformers/rich-15.0.0-py3-none-any.whl
+sentence_transformers/safetensors-0.8.0-cp310-abi3-win_amd64.whl
+sentence_transformers/scikit_learn-1.9.0-cp313-cp313-win_amd64.whl
+sentence_transformers/scipy-1.17.1-cp313-cp313-win_amd64.whl
+sentence_transformers/sentence_transformers-5.5.1-py3-none-any.whl
+sentence_transformers/setuptools-81.0.0-py3-none-any.whl
+sentence_transformers/shellingham-1.5.4-py2.py3-none-any.whl
+sentence_transformers/sympy-1.14.0-py3-none-any.whl
+sentence_transformers/threadpoolctl-3.6.0-py3-none-any.whl
+sentence_transformers/tokenizers-0.22.2-cp39-abi3-win_amd64.whl
+sentence_transformers/torch-2.12.0-cp313-cp313-win_amd64.whl
+sentence_transformers/tqdm-4.68.2-py3-none-any.whl
+sentence_transformers/transformers-5.11.0-py3-none-any.whl
+sentence_transformers/typer-0.25.1-py3-none-any.whl
+sentence_transformers/typing_extensions-4.15.0-py3-none-any.whl
+
+#Legacy Templates
+itemCreation/newpart/excel_files/NewPartNumber_Table.xlsx
+
+# Virtual environments
+venv/
+.venv/
+
+# Environment files
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
