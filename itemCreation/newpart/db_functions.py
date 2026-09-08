@@ -93,24 +93,27 @@ def set_699_part_number(conn, new_num):
 
 
 # GET TEMPLATE FROM supabase.py
-def get_template_item(conn, search, vendor_id, legal_entity, fallback_entity=10):
+def get_template_item(conn, search, vendor_id, legal_entity, fallback_entity='0010'):
     search_param = f"%{search}%"
     vnd_param = str(vendor_id)
 
     # ✅ Validate vendor_id against both columns
     vendor_check_sql = """
-        SELECT 
-            CASE 
-                WHEN EXISTS (
-                    SELECT 1 FROM "Item_Master" 
-                    WHERE "VENDORSEARCHNAME" = %s
-                ) THEN 'VENDORSEARCHNAME'
-                WHEN EXISTS (
-                    SELECT 1 FROM "Item_Master" 
-                    WHERE "Vendor" = %s
-                ) THEN 'Vendor'
-                ELSE NULL
-            END AS match_column;
+    SELECT
+        CASE
+            WHEN EXISTS (
+                SELECT 1
+                FROM pbi_item_master
+                WHERE vendor_search_name = %s
+            ) THEN 'vendor_search_name'
+
+            WHEN EXISTS (
+                SELECT 1
+                FROM pbi_item_master
+                WHERE primary_vendor = %s
+            ) THEN 'primary_vendor'
+        ELSE NULL
+    END AS match_column;
     """
 
     vendor_match = pd.read_sql(vendor_check_sql, conn, params=[vnd_param, vnd_param])
@@ -124,41 +127,26 @@ def get_template_item(conn, search, vendor_id, legal_entity, fallback_entity=10)
     sql_template_item = f"""
     WITH Items AS(
         SELECT
-            "Item number",
-            "Product name",
-            "PurchLineDiscount"
-        FROM "Item_Master"
-        WHERE "Product name" LIKE %s   
+            "item_number",
+            "item_name"
+        FROM pbi_item_master
+        WHERE "item_name" LIKE %s   
             AND "{match_column}" = %s
-            AND "LEGALENTITY" = %s
-    ),
-
-    Occurance AS(
-        SELECT 
-            "PurchLineDiscount",
-            COUNT(*) AS Occurances
-        FROM Items
-        GROUP BY "PurchLineDiscount"
-        ORDER BY Occurances DESC 
-        LIMIT 1
+            AND "legal_entity" = %s
     )
 
     SELECT 
-        i.*,
-        o.occurances
-    FROM "Item_Master" i
-    JOIN Occurance o
-        ON i."PurchLineDiscount" = o."PurchLineDiscount"
-    WHERE "{match_column}" = %s
+        *
+    FROM Items
     LIMIT 1;
     """
 
     # Try requested entity
-    df = pd.read_sql(sql_template_item, conn, params=[search_param, vnd_param, legal_entity, vnd_param])
+    df = pd.read_sql(sql_template_item, conn, params=[search_param, vnd_param, legal_entity])
 
     # Fallback logic
     if df.empty and legal_entity != fallback_entity:
-        df = pd.read_sql(sql_template_item, conn, params=[search_param, vnd_param, fallback_entity, vnd_param])
+        df = pd.read_sql(sql_template_item, conn, params=[search_param, vnd_param, fallback_entity])
         return df, fallback_entity
 
     return df, legal_entity
@@ -167,27 +155,48 @@ def get_template_item(conn, search, vendor_id, legal_entity, fallback_entity=10)
 
 
 # FIND VENDOR FOR DESIRED LEGAL ENTITY IN supabase.py
-def get_vendor_by_entity(conn, vendor_id, legal_entity):
+def get_vendor_by_entity(conn, vendor_id, legal_entity, fallback_vendor="V0010"):
     """
-    Returns the correct vendor code for a given VENDORSEARCHNAME + Legal Entity.
-    Falls back to 'V0010' if not found.
+    Returns the corresponding matching value from the opposite column
+    within the specified legal entity.
     """
 
+    vendor_id = str(vendor_id).strip()
+
     sql = """
-        SELECT "Vendor"
-        FROM "Vendor_Master"
-        WHERE "VENDORSEARCHNAME" = %s
-        AND "LEGALENTITY" = %s
+        SELECT
+            vendor_search_name,
+            primary_vendor
+        FROM pbi_item_master
+        WHERE legal_entity = %s
+          AND (
+                vendor_search_name = %s
+                OR primary_vendor = %s
+              )
         LIMIT 1;
     """
 
-    df = pd.read_sql(sql, conn, params=[str(vendor_id), legal_entity])
+    df = pd.read_sql(
+        sql,
+        conn,
+        params=[legal_entity, vendor_id, vendor_id]
+    )
 
     if df.empty:
-        return "V0010"  # ✅ fallback vendor
-    else:
-        return str(df["Vendor"].iloc[0]).strip()
+        return fallback_vendor
 
+    vendor_search_name = str(df.iloc[0]["vendor_search_name"]).strip()
+    primary_vendor = str(df.iloc[0]["primary_vendor"]).strip()
+
+    # If user supplied vendor_search_name, return primary_vendor
+    if vendor_id == vendor_search_name:
+        return primary_vendor
+
+    # If user supplied primary_vendor, return vendor_search_name
+    if vendor_id == primary_vendor:
+        return vendor_search_name
+
+    return fallback_vendor
 
 
 
@@ -210,7 +219,7 @@ def duplicate_check(dup_df):
         return True
 
     dup_list = (
-        dup_df["Item number"]
+        dup_df["item_number"]
         .dropna()
         .astype(str)
         .str.strip()

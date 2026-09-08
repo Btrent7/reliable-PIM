@@ -15,14 +15,14 @@ def score_similarity(new_text, existing_text):
     # token_set_ratio works well when words are similar but order changes
     return fuzz.token_set_ratio(new_text, normalize_text(existing_text))
 
-def duplicate_check_fuzzy(dup_df, new_item_text, strong_threshold=90, review_threshold=50):
+def duplicate_check_fuzzy(dup_df, new_item_text, strong_threshold=90, review_threshold=30):
     if dup_df.empty:
         print("No duplicates found!")
         return True
 
     dup_df = dup_df.copy()
 
-    dup_df["similarity_score"] = dup_df["Product name"].apply(
+    dup_df["similarity_score"] = dup_df["item_name"].apply(
         lambda x: score_similarity(new_item_text, x)
     )
 
@@ -36,7 +36,7 @@ def duplicate_check_fuzzy(dup_df, new_item_text, strong_threshold=90, review_thr
 
     if not strong_matches.empty:
         print("\nHIGH LIKELIHOOD DUPLICATE(S):\n")
-        print(strong_matches[["Item number", "Product name", "similarity_score"]])
+        print(strong_matches[["item_number", "item_name", "similarity_score"]])
 
         while True:
             cont_boolean = input("Very likely duplicate found. Continue anyway? (Y/N): ").strip().upper()
@@ -46,7 +46,7 @@ def duplicate_check_fuzzy(dup_df, new_item_text, strong_threshold=90, review_thr
 
     if not review_matches.empty:
         print("\nPOSSIBLE DUPLICATE(S) TO REVIEW:\n")
-        print(review_matches[["Item number", "Product name", "similarity_score"]])
+        print(review_matches[["item_number", "item_name", "similarity_score"]])
 
         while True:
             cont_boolean = input("Possible duplicates found. Continue Part Number Creation? (Y/N): ").strip().upper()
