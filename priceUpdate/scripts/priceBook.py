@@ -2,9 +2,15 @@ import os
 import pandas as pd
 import openpyxl as op
 import psycopg
+from pathlib import Path
 
+ROOT = Path(__file__).resolve().parents[1]
 
-priceBook_list = r'C:\Users\btrent\OneDrive - The Reliable Automatic Sprinkler Co., Inc\Documents\GitHub\Reliable-PIM\priceUpdate\trade_agreement_templates\Cleaning Template.xlsx'
+priceBook_list = (
+    ROOT /
+    "trade_agreement_templates" /
+    "Cleaning Template.xlsx"
+)
 
 
 # Set Enviornment Variable in PowerShell:
