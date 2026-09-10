@@ -13,7 +13,8 @@ import sys
 import os
 import psycopg  # psycopg v3
 from . import db_functions as db
-from . import db_ai_functions as ai
+
+# from . import db_ai_functions as ai
 
 
 # Remove SQL Warning Prints
@@ -111,9 +112,9 @@ if not db.duplicate_check(dup_df):
 # FUZZY Matching for Duplicate Check
 new_item_check = ai.build_candidate_text(vendor_desc, vendor_sku, item_detail)
 
-# Decision: If list contains values, print dup_list, else print input(Y/N)
-if not ai.duplicate_check_fuzzy(dup_df, new_item_check):
-    sys.exit(1)
+# # Decision: If list contains values, print dup_list, else print input(Y/N)
+# if not ai.duplicate_check_fuzzy(dup_df, new_item_check):
+#     sys.exit(1)
 
 
 
@@ -178,7 +179,7 @@ Template Item:
 New Item:
 Item Number:  {new_part_number} 
 Item Descpt:  {item_descript}
-Vendor SKU:   {vendor_sku}
+External ID:  {vendor_sku}
 Vendor ID:    {vendor_id} | {temp_vendor}
 
 Location:     {location}

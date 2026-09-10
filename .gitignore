@@ -86,3 +86,6 @@ __pycache__/
 
 # Jupyter
 .ipynb_checkpoints/
+
+# sentence-transformers functions:
+itemCreation/newpart/db_ai_functions
