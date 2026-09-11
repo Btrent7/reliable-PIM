@@ -109,8 +109,8 @@ if not db.duplicate_check(dup_df):
 
 
 
-# FUZZY Matching for Duplicate Check
-new_item_check = ai.build_candidate_text(vendor_desc, vendor_sku, item_detail)
+# # FUZZY Matching for Duplicate Check
+# new_item_check = ai.build_candidate_text(vendor_desc, vendor_sku, item_detail)
 
 # # Decision: If list contains values, print dup_list, else print input(Y/N)
 # if not ai.duplicate_check_fuzzy(dup_df, new_item_check):
